@@ -22,6 +22,13 @@ class Model:
         self.a = DAO.getA(c, min, max)
         print(f"archi da query: {len(self.a)}")  # ← aggiungi questo
         cont_else = 0
+        # for a1, a2 in combination(lista, 2)
+        #     u = self.mappa[a1[0]]
+        #     v = self.mappa[a2[0]]
+        #     p1 = a1[1]
+        #     p2 = a2[1]
+        #     p = p1 + p2
+        #     if p2 <
         for a in self.a:
             if a[2] < a[3]:
                 self.g.add_edge(self.mappa[a[0]], self.mappa[a[1]], weight = int(a[4]))
@@ -87,6 +94,5 @@ class Model:
         somma = 0
         for i in range(0, len(parziale)-1):
             somma += self.g[parziale[i]][parziale[i+1]]["weight"]
-
         return somma
 

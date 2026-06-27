@@ -68,7 +68,7 @@ class DAO():
         cursor = conn.cursor(dictionary=True)
         query = """select t1.p as p1, t2.p as p2, t1.nvendite as v1, t2.nvendite as v2, (t1.somma + t2.somma) as peso
                     from(
-                    select oi.product_id as p,  Csum(oi.quantity) as nVendite, sum(oi.quantity) as somma
+                    select oi.product_id as p,  sum(oi.quantity) as nVendite, sum(oi.quantity) as somma
                     from products p, orders o, order_items oi 
                     where p.product_id = oi.product_id and o.order_id = oi.order_id and p.category_id = %s and o.order_date between %s and %s
                     group by oi.product_id) as t1,
@@ -76,7 +76,7 @@ class DAO():
                     from products p, orders o, order_items oi 
                     where p.product_id = oi.product_id and o.order_id = oi.order_id and p.category_id = %s and o.order_date between %s and %s
                     group by oi.product_id) as t2
-                    where t1.p <> t2.p
+                    where t1.p < t2.p
                     """
         cursor.execute(query, (c, min, max, c, min, max))
 
